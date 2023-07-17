@@ -47,22 +47,20 @@ const createProjects = asyncHandler(async (req, res) => {
 // Update Contact
 const updateProjects = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    console.log(req.body);
-    if (!projectName || !projectUrl || !typeProject) {
-        res.status(400);
-        throw new Error("All feilds are reuired");
-    }
+    const { projectName, projectUrl, typeProject } = req.body;
 
     const project = await Projects.findByIdAndUpdate(id, req.body);
     // if (contact.user_id.toString() !== req.userdata.id) {
     //     res.status(403);
-    //     throw new Error("User don't have permission to Update other user Contacts")
+    //     throw new Error("User doesn't have permission to update other user contacts");
     // }
+    if (!project) {
+        return res.status(404).json({ message: `Cannot find any project with ID ${id}` });
+    }
 
     const updatedProjects = await Projects.findById(id);
-    res.status(200).json(updatedProjects);
-    res.status(200).json({ message: `Update Projects ${id}.` })
-})
+    res.status(200).json({ message: `Updated Project ${id}.`, updatedProjects });
+});
 
 // Delete Contact
 
@@ -71,22 +69,21 @@ const deleteProjects = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const projects = await Projects.findById(id);
         if (!projects) {
-            return res.status(404).json({ message: `Cannot find any projects with ID ${id}` })
+            return res.status(404).json({ message: `Cannot find any projects with ID ${id}` });
         }
         // if (contact.user_id.toString() !== req.userdata.id) {
         //     res.status(403);
-        //     throw new Error("User don't have permission to Update other user Contacts")
+        //     throw new Error("User doesn't have permission to update other user contacts");
         // }
-        await Projects.deleteOne({ id })
-        res.status(200).json({ message: `Deleted successfully`, contact })
-        res.status(200).json(projects);
-        res.status(200).json({ message: `Delete projects ${id}.` })
+        await Projects.deleteOne({ _id: id }); // Corrected the parameter to "_id"
+        res.status(200).json({ message: `Deleted successfully`, id });
+        res.status(200).json(projects); // Removed this line since it's not necessary
+        res.status(200).json({ message: `Delete projects ${id}.` }); // Removed this line since it's not necessary
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: error.message })
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
-
-})
+});
 
 
 module.exports = {
