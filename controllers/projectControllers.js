@@ -17,13 +17,13 @@ const getProjects = asyncHandler(async (req, res) => {
 const getProjectsId = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
-        const contact = await Contact.findById(id);
-        res.status(200).json(contact);
-        res.status(200).json({ message: `Get contact ${id}.` })
+        const project = await Projects.findById(id);
+        res.status(200).json(project);
+        res.status(200).json({ message: `Get project ${id}.` })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: error.message })
-        res.status(500).json({ message: `Get contact ${id}.` })
+        res.status(500).json({ message: `Get project ${id}.` })
     }
 })
 
@@ -48,21 +48,20 @@ const createProjects = asyncHandler(async (req, res) => {
 const updateProjects = asyncHandler(async (req, res) => {
     const { id } = req.params;
     console.log(req.body);
-    const { name, email, phone } = req.body;
-    if (!name || !email || !phone) {
+    if (!projectName || !projectUrl || !typeProject) {
         res.status(400);
         throw new Error("All feilds are reuired");
     }
-    
-    const contact = await Contact.findByIdAndUpdate(id, req.body);
-    if (contact.user_id.toString() !== req.userdata.id) {
-        res.status(403);
-        throw new Error("User don't have permission to Update other user Contacts")
-    }
 
-    const updatedContact = await Contact.findById(id);
-    res.status(200).json(updatedContact);
-    res.status(200).json({ message: `Update contact ${id}.` })
+    const project = await Projects.findByIdAndUpdate(id, req.body);
+    // if (contact.user_id.toString() !== req.userdata.id) {
+    //     res.status(403);
+    //     throw new Error("User don't have permission to Update other user Contacts")
+    // }
+
+    const updatedProjects = await Projects.findById(id);
+    res.status(200).json(updatedProjects);
+    res.status(200).json({ message: `Update Projects ${id}.` })
 })
 
 // Delete Contact
@@ -70,18 +69,18 @@ const updateProjects = asyncHandler(async (req, res) => {
 const deleteProjects = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
-        const contact = await Contact.findById(id);
-        if (!contact) {
-            return res.status(404).json({ message: `Cannot find any product with ID ${id}` })
+        const projects = await Projects.findById(id);
+        if (!projects) {
+            return res.status(404).json({ message: `Cannot find any projects with ID ${id}` })
         }
-        if (contact.user_id.toString() !== req.userdata.id) {
-            res.status(403);
-            throw new Error("User don't have permission to Update other user Contacts")
-        }
-        await contact.deleteOne({id})
+        // if (contact.user_id.toString() !== req.userdata.id) {
+        //     res.status(403);
+        //     throw new Error("User don't have permission to Update other user Contacts")
+        // }
+        await Projects.deleteOne({ id })
         res.status(200).json({ message: `Deleted successfully`, contact })
-        res.status(200).json(contact);
-        res.status(200).json({ message: `Delete Contact ${id}.` })
+        res.status(200).json(projects);
+        res.status(200).json({ message: `Delete projects ${id}.` })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: error.message })
