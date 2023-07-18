@@ -2,15 +2,11 @@ const express = require('express');
 const { errorHandler } = require('./middleware/errorHandler');
 const { connectDb } = require('./config/dbConnetions');
 const cors = require('cors');
-
-
 const dotenv = require("dotenv").config();
 connectDb();
 
 const app = express();
 const port = 9000;
-
-const cors = require('cors');
 
 // app.use("/", (req, res) => {
 //   res.json({ message: "Hello from express app!" });
