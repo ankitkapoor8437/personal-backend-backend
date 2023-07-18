@@ -31,7 +31,7 @@ const getProjectsId = asyncHandler(async (req, res) => {
 
 const createProjects = asyncHandler(async (req, res) => {
     console.log(req.body);
-    const { projectName, projectUrl, typeProject } = req.body;
+    const { projectName, projectUrl, description, typeProject, image } = req.body;
     if (!projectName || !projectUrl || !typeProject) {
         res.status(400);
         throw new Error("All feilds are reuired");
@@ -39,7 +39,9 @@ const createProjects = asyncHandler(async (req, res) => {
     const project = await Projects.create({
         projectName,
         projectUrl,
+        description,
         typeProject,
+        image,
     });
     res.status(200).json(project);
 })
@@ -47,7 +49,7 @@ const createProjects = asyncHandler(async (req, res) => {
 // Update Contact
 const updateProjects = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { projectName, projectUrl, typeProject } = req.body;
+    const { projectName, projectUrl, description, typeProject, image } = req.body;
 
     const project = await Projects.findByIdAndUpdate(id, req.body);
     // if (contact.user_id.toString() !== req.userdata.id) {

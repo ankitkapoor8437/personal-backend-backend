@@ -10,9 +10,17 @@ const projectSchema = mongoose.Schema(
             type: String,
             required:[true, "URL is required"]
         },
+        description: {
+            type: String,
+            required:[true, "Description of Project"]
+        },
         typeProject: {
             type: String,
-            required:[true, "Type of the proeject"]
+            required:[true, "Type of the Project"]
+        },
+        image: {
+            type: String,
+            required:[true, "Image of the project."]
         },
     },
     {
