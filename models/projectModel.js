@@ -20,7 +20,6 @@ const projectSchema = mongoose.Schema(
         },
         image: {
             type: String,
-            required:[true, "Image of the project."]
         },
     },
     {
