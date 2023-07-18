@@ -50,7 +50,7 @@ const createProjects = asyncHandler(async (req, res) => {
 const updateProjects = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { projectName, projectUrl, description, typeProject, image } = req.body;
-
+    
     const project = await Projects.findByIdAndUpdate(id, req.body);
     // if (contact.user_id.toString() !== req.userdata.id) {
     //     res.status(403);

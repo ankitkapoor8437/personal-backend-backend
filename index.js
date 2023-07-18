@@ -16,6 +16,7 @@ const port = 9000;
 app.use(cors());
 app.use(express.json());
 app.use("/api/projects", require("./routes/projectRoute"));
+app.use("/api/queries", require("./routes/queriesRoute"));
 app.use(errorHandler);
 
 
