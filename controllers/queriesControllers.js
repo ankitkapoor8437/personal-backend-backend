@@ -29,7 +29,7 @@ const getQueriesById = asyncHandler(async (req, res) => {
 // Create Query
 const createQuery = asyncHandler(async (req, res) => {
     console.log(req.body);
-    const { name, email, message } = req.body;
+    const { name, email, subject, message } = req.body;
     if (!name || !email || !message) {
         res.status(400);
         throw new Error("All feilds are reuired");
