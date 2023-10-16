@@ -8,6 +8,9 @@ const queriesSchema = mongoose.Schema(
         email: {
             type: String,
         },
+        subject: {
+            type: String,
+        },
         message: {
             type: String,
         },

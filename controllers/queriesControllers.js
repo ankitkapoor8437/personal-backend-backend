@@ -37,6 +37,7 @@ const createQuery = asyncHandler(async (req, res) => {
     const query = await Queries.create({
         name,
         email,
+        subject,
         message,
     });
     res.status(200).json(query);
